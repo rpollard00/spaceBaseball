@@ -1,0 +1,6 @@
+@SpaceBaseball.WebAPI_HostAddress = http://localhost:5159
+
+GET {{SpaceBaseball.WebAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
