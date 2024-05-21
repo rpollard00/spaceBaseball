@@ -49,7 +49,9 @@ public class MarkovGenerator(int lookbackSize = 2)
             var currentCell = Cells[window];
             letter = GeneratorUtils.WheelSelect(currentCell.NextLetter, currentCell.TotalCount);
             output.Append(letter);
-            window = output.Length - _lookbackSize >= 0 ? output.ToString().Substring(output.Length - _lookbackSize) : output.ToString();
+            window = output.Length - _lookbackSize >= 0
+                ? output.ToString().Substring(output.Length - _lookbackSize)
+                : output.ToString();
         }
 
         output.Remove(output.Length - 1, 1);
