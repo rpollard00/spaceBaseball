@@ -31,10 +31,9 @@ public class PlayerCreator(IBaseballDbContext dbContext) : IPlayerCreator
         return player;
     }
 
-    public async Task<PlayerDto> CreateRandomPlayer(INameGenerator nameGenerator)
+    public async Task<PlayerDto> CreateRandomPlayer(INameGenerator nameGenerator, IPlayerGenerator playerGenerator)
     {
-        PlayerGenerator generator = new();
-        var playerDto = generator.GeneratePlayer(nameGenerator);
+        var playerDto = playerGenerator.GeneratePlayer(nameGenerator);
 
         var player = playerDto.ToPlayer();
         

@@ -27,6 +27,7 @@ public class WebApi
     {
         var app = _builder.Build();
 
+        
         app.Services.GetRequiredService<INameGenerator>();
         // Configure the HTTP request pipeline.
         if (app.Environment.IsDevelopment())
@@ -86,9 +87,9 @@ public static class ApiEndpoints
             return $"{firstName} {lastName}";
         });
         app.MapGet("/generator/player",
-            ([FromServices] IPlayerCreator playerCreator, [FromServices] INameGenerator nameGenerator) =>
+            ([FromServices] IPlayerCreator playerCreator, [FromServices] INameGenerator nameGenerator, [FromServices] IPlayerGenerator playerGenerator) =>
             {
-                var player = playerCreator.CreateRandomPlayer(nameGenerator);
+                var player = playerCreator.CreateRandomPlayer(nameGenerator, playerGenerator);
                 Console.WriteLine($"Invoke endpoint generator/player");
 
                 return player;
