@@ -1,4 +1,4 @@
-namespace SpaceBaseball.Core.NameGenerator;
+namespace SpaceBaseball.Core.NameGeneration;
 
 public static class GeneratorUtils 
 {

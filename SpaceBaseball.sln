@@ -14,7 +14,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpaceBaseball.Startup", "Sp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpaceBaseball.Adapter.Sqlite", "SpaceBaseball.Adapter.Sqlite\SpaceBaseball.Adapter.Sqlite.csproj", "{68CD295B-F76D-4888-A4C7-6ABEA40DDA6D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpaceBaseball.PlayerGenerator", "SpaceBaseball.PlayerGenerator\SpaceBaseball.PlayerGenerator.csproj", "{79B14B33-498A-4044-BF96-DEB221AB79F0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpaceBaseball.PlayerGeneratorConsole", "SpaceBaseball.PlayerGeneratorConsole\SpaceBaseball.PlayerGeneratorConsole.csproj", "{79B14B33-498A-4044-BF96-DEB221AB79F0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

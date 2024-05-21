@@ -1,6 +1,6 @@
 using System.Text;
 
-namespace SpaceBaseball.Core.NameGenerator;
+namespace SpaceBaseball.Core.NameGeneration;
 
 public class MarkovGenerator(int lookbackSize = 2)
 {

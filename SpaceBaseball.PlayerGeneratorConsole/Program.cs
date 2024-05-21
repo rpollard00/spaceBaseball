@@ -1,6 +1,6 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
-using SpaceBaseball.Core.NameGenerator;
+using SpaceBaseball.Core.NameGeneration;
 
 
 NameGenerator nameGen = new();

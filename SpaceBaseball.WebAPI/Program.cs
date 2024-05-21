@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
+using SpaceBaseball.Core.NameGeneration;
 using SpaceBaseball.Core.Ports;
+using SpaceBaseball.Core.Dto;
 
 namespace SpaceBaseball.WebAPI;
 
@@ -11,6 +13,9 @@ public class WebApi
     {
         
         _builder = WebApplication.CreateBuilder(args);
+        
+        _builder.Services.AddSingleton<INameGenerator, NameGenerator>();  
+        
         options.Invoke(_builder.Services);
         // Add services to the container.
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -22,6 +27,7 @@ public class WebApi
     {
         var app = _builder.Build();
 
+        app.Services.GetRequiredService<INameGenerator>();
         // Configure the HTTP request pipeline.
         if (app.Environment.IsDevelopment())
         {
@@ -66,7 +72,29 @@ public static class ApiEndpoints
             Console.WriteLine($"Invoke endpoint player/id, id: {id}");
             var player = service.GetPlayerById(id);
             return player;
+        })
+        .WithName("GetPlayerById")
+        .WithOpenApi();
+
+        app.MapGet("/generator/name", ([FromServices]INameGenerator nameService) =>
+        {
+
+            var firstName = nameService.GetNameFromPool("firstName");
+            var lastName = nameService.GetNameFromPool("lastName");
+            Console.WriteLine($"Invoke endpoint generator/name");
+
+            return $"{firstName} {lastName}";
         });
+        app.MapGet("/generator/player",
+            ([FromServices] IPlayerCreator playerCreator, [FromServices] INameGenerator nameGenerator) =>
+            {
+                var player = playerCreator.CreateRandomPlayer(nameGenerator);
+                Console.WriteLine($"Invoke endpoint generator/player");
+
+                return player;
+            })
+            .WithName("GenerateRandomPlayer")
+            .WithOpenApi();
     }
     
     

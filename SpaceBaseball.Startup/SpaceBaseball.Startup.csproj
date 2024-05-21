@@ -14,7 +14,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\SpaceBaseball.Adapter.Sqlite\SpaceBaseball.Adapter.Sqlite.csproj" />
-      <ProjectReference Include="..\SpaceBaseball.PlayerGenerator\SpaceBaseball.PlayerGenerator.csproj" />
+      <ProjectReference Include="..\SpaceBaseball.PlayerGeneratorConsole\SpaceBaseball.PlayerGeneratorConsole.csproj" />
       <ProjectReference Include="..\SpaceBaseball.WebAPI\SpaceBaseball.WebAPI.csproj" />
     </ItemGroup>
 
