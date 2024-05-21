@@ -1,7 +1,7 @@
-using Microsoft.AspNetCore.Mvc;
 using SpaceBaseball.Core.NameGeneration;
 using SpaceBaseball.Core.Ports;
 using SpaceBaseball.Core.Dto;
+using SpaceBaseball.WebAPI.Endpoints;
 
 namespace SpaceBaseball.WebAPI;
 
@@ -44,62 +44,6 @@ public class WebApi
 
 }
 
-public static class ApiEndpoints
-{
-    private static readonly string[] Summaries = new[]
-            {
-                "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-            };
-
-    public static void RegisterEndpoints(this WebApplication app)
-    {
-        app.MapGet("/weatherforecast", () =>
-        {
-            var forecast = Enumerable.Range(1, 5).Select(index =>
-                    new WeatherForecast
-                    (
-                        DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                        Random.Shared.Next(-20, 55),
-                        Summaries[Random.Shared.Next(Summaries.Length)]
-                    ))
-                .ToArray();
-            return forecast;
-        })
-        .WithName("GetWeatherForecast")
-        .WithOpenApi();
-
-        app.MapGet("/player/{id}", (int id, [FromServices]IPlayerService service) =>
-        {
-            Console.WriteLine($"Invoke endpoint player/id, id: {id}");
-            var player = service.GetPlayerById(id);
-            return player;
-        })
-        .WithName("GetPlayerById")
-        .WithOpenApi();
-
-        app.MapGet("/generator/name", ([FromServices]INameGenerator nameService) =>
-        {
-
-            var firstName = nameService.GetNameFromPool("firstName");
-            var lastName = nameService.GetNameFromPool("lastName");
-            Console.WriteLine($"Invoke endpoint generator/name");
-
-            return $"{firstName} {lastName}";
-        });
-        app.MapGet("/generator/player",
-            ([FromServices] IPlayerCreator playerCreator, [FromServices] INameGenerator nameGenerator, [FromServices] IPlayerGenerator playerGenerator) =>
-            {
-                var player = playerCreator.CreateRandomPlayer(nameGenerator, playerGenerator);
-                Console.WriteLine($"Invoke endpoint generator/player");
-
-                return player;
-            })
-            .WithName("GenerateRandomPlayer")
-            .WithOpenApi();
-    }
-    
-    
-}
 record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
 {
     public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
