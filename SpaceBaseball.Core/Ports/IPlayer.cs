@@ -9,5 +9,5 @@ public interface IPlayerCreator
 
 public interface IPlayerRetriever
 {
-   Task<Player> GetPlayerById(long id);
+   Task<Player?> GetPlayerById(long id);
 }

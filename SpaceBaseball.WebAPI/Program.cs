@@ -1,5 +1,5 @@
-using System.Text.Json.Serialization;
-using Microsoft.AspNetCore.Mvc.ApplicationParts;
+using Microsoft.AspNetCore.Mvc;
+using SpaceBaseball.Core.Ports;
 
 namespace SpaceBaseball.WebAPI;
 
@@ -11,6 +11,7 @@ public class WebApi
     {
         
         _builder = WebApplication.CreateBuilder(args);
+        options.Invoke(_builder.Services);
         // Add services to the container.
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         _builder.Services.AddEndpointsApiExplorer();
@@ -59,10 +60,43 @@ public static class ApiEndpoints
         })
         .WithName("GetWeatherForecast")
         .WithOpenApi();
+
+        app.MapGet("/player/{id}", (int id, [FromServices]IPlayerService service) =>
+        {
+            Console.WriteLine($"Invoke endpoint player/id, id: {id}");
+            var player = service.GetPlayerById(id);
+            return player;
+        });
     }
+    
     
 }
 record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
 {
     public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+}
+
+public class PlayerService(IPlayerRetriever playerRetriever) : IPlayerService
+{
+    private IPlayerRetriever PlayerRetriever { get; set; } = playerRetriever;
+    public async Task<PlayerDto?> GetPlayerById(long id)
+    {
+        Console.WriteLine($"Invoke PlayerService GetPlayerById {id}");
+        var player = await PlayerRetriever.GetPlayerById(id);
+        if (player == null)
+        {
+            return null;
+        } 
+        
+        PlayerDto playerDto = new()
+        {
+            Id = player.Id,
+            FirstName = player.FirstName,
+            LastName = player.LastName,
+            Fielding = player.Fielding,
+            HitChance = player.HitChance
+        };
+
+        return playerDto;
+    }
 }

@@ -7,6 +7,11 @@ public class NameGenerator : INameGenerator
 {
     private Dictionary<string, MarkovGenerator> NamePool { get; set; } = new();
 
+    public NameGenerator()
+    {
+        
+    }
+
     public bool TryAddNamePool(string selector, MarkovGenerator generator)
     {
         return NamePool.TryAdd(selector, generator);
