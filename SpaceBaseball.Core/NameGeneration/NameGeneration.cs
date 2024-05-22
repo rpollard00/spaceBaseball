@@ -2,7 +2,7 @@ using System.Text;
 
 namespace SpaceBaseball.Core.NameGeneration;
 
-public class MarkovGenerator(int lookbackSize = 2)
+public class NameGeneration(int lookbackSize = 2)
 {
     private readonly char _endChar = '*';
     private readonly int _lookbackSize = lookbackSize;
@@ -38,8 +38,13 @@ public class MarkovGenerator(int lookbackSize = 2)
         
     }
 
-    public string Generate()
+    public string Generate(Func<Dictionary<char, int>, int, char> randomFunc)
     {
+        if (Cells.Count == 0)
+        {
+            throw new InvalidOperationException(
+                "Name Generator has not been trained with any data. Please train the generator before invoking Generate.");
+        }
         StringBuilder output = new();
         string window = ""; 
         char letter = '\0';
@@ -47,7 +52,7 @@ public class MarkovGenerator(int lookbackSize = 2)
         while (letter != _endChar)
         {
             var currentCell = Cells[window];
-            letter = GeneratorUtils.WheelSelect(currentCell.NextLetter, currentCell.TotalCount);
+            letter = randomFunc(currentCell.NextLetter, currentCell.TotalCount);
             output.Append(letter);
             window = output.Length - _lookbackSize >= 0
                 ? output.ToString().Substring(output.Length - _lookbackSize)
@@ -64,7 +69,7 @@ public class MarkovGenerator(int lookbackSize = 2)
 
         for (int i = 0; i < num; i++)
         {
-            output.Add(Generate());
+            output.Add(Generate(GeneratorUtils.WheelSelect));
         }
 
         return output;

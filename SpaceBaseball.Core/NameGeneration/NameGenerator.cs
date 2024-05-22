@@ -2,23 +2,24 @@ using SpaceBaseball.Core.Ports;
 
 namespace SpaceBaseball.Core.NameGeneration;
 
-
 public class NameGenerator : INameGenerator
 {
-    private Dictionary<string, MarkovGenerator> NamePool { get; set; } = new();
+    private readonly ITrainingDataReader _trainingDataReader;
+    private Dictionary<string, NameGeneration> NamePool { get; set; } = new();
 
-    public NameGenerator()
-    {   
-        var firstNameMarkov = new MarkovGenerator(lookbackSize: 2);
-        var lastNameMarkov = new MarkovGenerator(lookbackSize: 2);
+    public NameGenerator(ITrainingDataReader trainingDataReader)
+    {
+        _trainingDataReader = trainingDataReader; 
+        var firstNameMarkov = new NameGeneration(lookbackSize: 2);
+        var lastNameMarkov = new NameGeneration(lookbackSize: 2);
         TryAddNamePool("firstName", firstNameMarkov);
         Console.WriteLine("Add firstName pool");
         TryAddNamePool("lastName", lastNameMarkov);
         Console.WriteLine("Add lastName pool");
 
-        var firstNameInput = GeneratorUtils.NameFileReader("../data/sampleFirstNames.txt");
+        var firstNameInput = _trainingDataReader.ReadNamesFromFile("../data/sampleFirstNames.txt");
         Console.WriteLine("Load firstName input from txt");
-        var lastNameInput = GeneratorUtils.NameFileReader("../data/sampleLastNames.txt");
+        var lastNameInput = _trainingDataReader.ReadNamesFromFile("../data/sampleLastNames.txt");
         Console.WriteLine("Load lastName input from txt");
 
         firstNameInput.ForEach(name => TrainPoolOn("firstName", name));
@@ -29,7 +30,7 @@ public class NameGenerator : INameGenerator
         Console.WriteLine("[Completed]: Constructed Name Generator");
     }
 
-    public bool TryAddNamePool(string selector, MarkovGenerator generator)
+    public bool TryAddNamePool(string selector, NameGeneration generator)
     {
         return NamePool.TryAdd(selector, generator);
     }
@@ -37,7 +38,7 @@ public class NameGenerator : INameGenerator
     public string GetNameFromPool(string selector)
     {
         var selectedGenerator = TryGetPool(selector);
-        return selectedGenerator.Generate();
+        return selectedGenerator.Generate(GeneratorUtils.WheelSelect);
     }
     
     public void TrainPoolOn(string selector, string input)
@@ -46,7 +47,7 @@ public class NameGenerator : INameGenerator
         selectedGenerator.Train(input);
     }
 
-    private MarkovGenerator TryGetPool(string selector)
+    private NameGeneration TryGetPool(string selector)
     {
         try
         {

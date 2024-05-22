@@ -13,7 +13,8 @@ public class WebApi
     {
         
         _builder = WebApplication.CreateBuilder(args);
-        
+
+        _builder.Services.AddSingleton<ITrainingDataReader, TrainingFileDataReader>();
         _builder.Services.AddSingleton<INameGenerator, NameGenerator>();  
         
         options.Invoke(_builder.Services);

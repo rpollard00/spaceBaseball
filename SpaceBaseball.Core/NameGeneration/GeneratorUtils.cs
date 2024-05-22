@@ -1,11 +1,13 @@
+using SpaceBaseball.Core.Ports;
+
 namespace SpaceBaseball.Core.NameGeneration;
 
-public static class GeneratorUtils 
+public static class GeneratorUtils
 {
     public static char WheelSelect(Dictionary<char, int> charFrequencyDict, int totalCount)
     {
         Random rng = new();
-        int selectedIndex = rng.Next(totalCount+1);
+        int selectedIndex = rng.Next(totalCount + 1);
         int currentIndex = 0;
 
         foreach (var (k, v) in charFrequencyDict)
@@ -20,17 +22,17 @@ public static class GeneratorUtils
 
         throw new IndexOutOfRangeException("Provided totalCount was incorrect");
     }
+}
+public class TrainingFileDataReader : ITrainingDataReader {
     
-    public static List<string> NameFileReader(string filename)
+    public List<string> ReadNamesFromFile(string filename)
     {
-        List<string> output = new(); 
-        using (StreamReader reader = new StreamReader(filename))
+        List<string> output = new();
+        using StreamReader reader = new StreamReader(filename);
+        string? line;
+        while ((line = reader.ReadLine()) != null)
         {
-            string? line;
-            while ((line = reader.ReadLine()) != null)
-            {
-                output.Add(line);
-            }
+            output.Add(line);
         }
 
         return output;
