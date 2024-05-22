@@ -2,13 +2,14 @@
 
 using SpaceBaseball.Core.NameGeneration;
 
+NameGenerator nameGen = new();
+TrainingFileDataReader trainingFileDataReader = new();
 
-var nameFileReader = new TrainingFileDataReader();
+nameGen.BuildNamePool("firstName", trainingFileDataReader.ReadNamesFromFile("../data/sampleFirstNames.txt")); 
+nameGen.BuildNamePool("lastName", trainingFileDataReader.ReadNamesFromFile("../data/sampleLastNames.txt")); 
 
-NameGenerator nameGen = new(nameFileReader);
-
-var firstNameMarkov = new NameGeneration(lookbackSize: 2);
-var lastNameMarkov = new NameGeneration(lookbackSize: 2);
+var firstNameMarkov = new MarkovGenerator(lookbackSize: 2);
+var lastNameMarkov = new MarkovGenerator(lookbackSize: 2);
 nameGen.TryAddNamePool("firstName", firstNameMarkov);
 nameGen.TryAddNamePool("lastName", lastNameMarkov);
 

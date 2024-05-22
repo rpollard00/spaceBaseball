@@ -2,7 +2,7 @@ using System.Text;
 
 namespace SpaceBaseball.Core.NameGeneration;
 
-public class NameGeneration(int lookbackSize = 2)
+public class MarkovGenerator(int lookbackSize = 2)
 {
     private readonly char _endChar = '*';
     private readonly int _lookbackSize = lookbackSize;

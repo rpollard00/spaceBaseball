@@ -14,7 +14,6 @@ public class WebApi
         
         _builder = WebApplication.CreateBuilder(args);
 
-        _builder.Services.AddSingleton<ITrainingDataReader, TrainingFileDataReader>();
         _builder.Services.AddSingleton<INameGenerator, NameGenerator>();  
         
         options.Invoke(_builder.Services);
@@ -28,8 +27,11 @@ public class WebApi
     {
         var app = _builder.Build();
 
+        var nameGenerator = app.Services.GetRequiredService<INameGenerator>();
+        var trainingDataReader = new TrainingFileDataReader();
+        nameGenerator.BuildNamePool("firstName", trainingDataReader.ReadNamesFromFile("../data/sampleFirstNames.txt")); 
+        nameGenerator.BuildNamePool("lastName", trainingDataReader.ReadNamesFromFile("../data/sampleLastNames.txt")); 
         
-        app.Services.GetRequiredService<INameGenerator>();
         // Configure the HTTP request pipeline.
         if (app.Environment.IsDevelopment())
         {
@@ -42,12 +44,6 @@ public class WebApi
 
         return app.RunAsync();
     }
-
-}
-
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
 }
 
 public class PlayerService(IPlayerRetriever playerRetriever) : IPlayerService
