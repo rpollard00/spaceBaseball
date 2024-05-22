@@ -3,13 +3,13 @@ using SpaceBaseball.Core.NameGeneration;
 
 namespace SpaceBaseball.Test.Core.Test;
 
-public class NameGenerationTest
+public class MarkovGeneratorTest
 {
     [Fact]
     public void NameGeneration_GeneratesExpectedName()
     {
        // arrange
-       var markovGenerator = new NameGeneration(lookbackSize: 2);
+       var markovGenerator = new MarkovGenerator(lookbackSize: 2);
        var nextLetterQueue = new Queue<char>(new[] { 'B', 'r', 'o', 's', 'e', 's', '*' });
        
        // act
@@ -24,7 +24,7 @@ public class NameGenerationTest
     public void NameGeneration_UntrainedGeneratorThrowsInvalidOperationException()
     {
        // arrange
-       var markovGenerator = new NameGeneration(lookbackSize: 2);
+       var markovGenerator = new MarkovGenerator(lookbackSize: 2);
        
        // act
        var nextLetterQueue = new Queue<char>(new[] { 'B', 'r', 'o', 's', 'e', 's', '*' });
@@ -38,7 +38,26 @@ public class NameGenerationTest
     public void NameGenerator_TryGetPoolReturnsPoolWhenValid()
     {
         // arrange
-        Assert.True(true);
+        var nameGenerator = new NameGenerator();
+        nameGenerator.BuildNamePool("dummyPool", ["Dan", "Sandy", "Peanut"]);
+        
+        // act
+        var dummyPool = nameGenerator.TryGetPool("dummyPool");
+        
+        // assert
+        Assert.NotNull(dummyPool);
+    }
 
+    [Fact]
+    public void NameGeneratorTryGetPoolThrowsWhenInvalid()
+    {
+        // arrange
+        var nameGenerator = new NameGenerator();
+
+        // act
+        var exception = Assert.Throws<ArgumentException>(() => nameGenerator.TryGetPool("notAPool"));
+        
+        // assert
+        Assert.Equal("No name pool found for selector: 'notAPool' (Parameter 'selector')", exception.Message); 
     }
 }
