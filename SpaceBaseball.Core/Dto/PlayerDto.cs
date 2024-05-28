@@ -1,3 +1,5 @@
+using SpaceBaseball.Core.Models;
+
 namespace SpaceBaseball.Core.Dto;
 
 public class PlayerDto
@@ -7,4 +9,5 @@ public class PlayerDto
     public string LastName { get; set; } = "";
     public int HitChance { get; set; }
     public int Fielding { get; set; }
+    public AbilityScores AbilityScores { get; set; } = new();
 }

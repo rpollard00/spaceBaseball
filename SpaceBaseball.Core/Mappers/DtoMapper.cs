@@ -15,6 +15,7 @@ public static class DtoMapper
             LastName = player.LastName,
             Fielding = player.Fielding,
             HitChance = player.HitChance,
+            AbilityScores = player.AbilityScores,
         };
 
         return dto;
@@ -29,6 +30,7 @@ public static class DtoMapper
             LastName = dto.LastName,
             Fielding = dto.Fielding,
             HitChance = dto.HitChance,
+            AbilityScores = dto.AbilityScores,
         };
 
         return player;

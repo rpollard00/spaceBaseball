@@ -1,5 +1,7 @@
 using SpaceBaseball.Core.Ports;
 using SpaceBaseball.Core.Dto;
+using SpaceBaseball.Core.NameGeneration;
+using SpaceBaseball.Core.StatGeneration;
 
 namespace SpaceBaseball.Core.PlayerGenerator;
 
@@ -12,6 +14,7 @@ public class PlayerGenerator : IPlayerGenerator
         {
             FirstName = nameGenerator.GetNameFromPool("firstName"),
             LastName = nameGenerator.GetNameFromPool("lastName"),
+            AbilityScores = AbilityScoreGenerator.GenerateAbilityScoreBlock(), 
             Fielding = 50,
             HitChance = 50,
         };
