@@ -1,6 +1,8 @@
 using System.Text;
+using SpaceBaseball.Core.NameGeneration;
+using SpaceBaseball.Core.Utils;
 
-namespace SpaceBaseball.Core.NameGeneration;
+namespace SpaceBaseball.Core.Adapters.NameGeneration;
 
 public class MarkovGenerator(int lookbackSize = 2)
 {

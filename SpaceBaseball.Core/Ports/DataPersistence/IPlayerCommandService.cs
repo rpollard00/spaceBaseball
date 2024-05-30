@@ -3,13 +3,8 @@ using SpaceBaseball.Core.Dto;
 
 namespace SpaceBaseball.Core.Ports;
 
-public interface IPlayerCreator
+public interface IPlayerCommandService
 {
-   Task<Player> CreatePlayer(Player player);
+   Task<Player> AddPlayer(Player player);
    Task<PlayerDto> CreateRandomPlayer(INameGenerator nameGenerator, IPlayerGenerator playerGenerator);
-}
-
-public interface IPlayerRetriever
-{
-   Task<Player?> GetPlayerById(long id);
 }

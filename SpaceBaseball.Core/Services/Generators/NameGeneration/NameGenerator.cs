@@ -1,6 +1,7 @@
 using SpaceBaseball.Core.Ports;
+using SpaceBaseball.Core.Utils;
 
-namespace SpaceBaseball.Core.NameGeneration;
+namespace SpaceBaseball.Core.Adapters.NameGeneration;
 
 public class NameGenerator : INameGenerator
 {

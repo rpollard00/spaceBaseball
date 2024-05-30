@@ -1,9 +1,8 @@
-using SpaceBaseball.Core.Ports;
+using SpaceBaseball.Core.Adapters.StatGeneration;
 using SpaceBaseball.Core.Dto;
-using SpaceBaseball.Core.NameGeneration;
-using SpaceBaseball.Core.StatGeneration;
+using SpaceBaseball.Core.Ports;
 
-namespace SpaceBaseball.Core.PlayerGenerator;
+namespace SpaceBaseball.Core.Adapters.PlayerGenerator;
 
 // generates a random player and commits to persistent storage
 public class PlayerGenerator : IPlayerGenerator
