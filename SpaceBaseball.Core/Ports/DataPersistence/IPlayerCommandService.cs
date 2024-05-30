@@ -1,10 +1,9 @@
-using SpaceBaseball.Core.Models;
 using SpaceBaseball.Core.Dto;
+using SpaceBaseball.Core.Models;
 
-namespace SpaceBaseball.Core.Ports;
+namespace SpaceBaseball.Core.Ports.DataPersistence;
 
 public interface IPlayerCommandService
 {
-   Task<Player> AddPlayer(Player player);
-   Task<PlayerDto> CreateRandomPlayer(INameGenerator nameGenerator, IPlayerGenerator playerGenerator);
+    public Task<Player?> AddPlayer(PlayerDto playerDto);
 }

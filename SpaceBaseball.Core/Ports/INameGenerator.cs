@@ -1,4 +1,4 @@
-using SpaceBaseball.Core.NameGeneration;
+using SpaceBaseball.Core.Services.Generators.NameGeneration;
 
 namespace SpaceBaseball.Core.Ports;
 
