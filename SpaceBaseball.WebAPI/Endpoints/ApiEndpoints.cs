@@ -18,8 +18,20 @@ public static class ApiEndpoints
             .WithName("GenerateRandomName")
             .WithOpenApi();
         
+        app.MapGet("/generator/teamname", GeneratorHandlers.TeamNameGeneratorHandler)
+            .WithName("GenerateRandomTeamName")
+            .WithOpenApi();
+        
+        app.MapGet("/generator/ballparkname", GeneratorHandlers.BallparkNameGeneratorHandler)
+            .WithName("GenerateRandomBallparkName")
+            .WithOpenApi();
+        
         app.MapGet("/generator/player", GeneratorHandlers.PlayerGeneratorHandler)
             .WithName("GenerateRandomPlayer")
+            .WithOpenApi();
+        
+        app.MapGet("/generator/team", GeneratorHandlers.TeamGeneratorHandler)
+            .WithName("GenerateRandomTeam")
             .WithOpenApi();
     }
 }

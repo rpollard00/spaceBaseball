@@ -6,10 +6,10 @@ namespace SpaceBaseball.WebAPI.Handlers;
 
 public static class PlayerHandlers
 {
-    internal static Task<PlayerDto?> GetPlayerByIdHandler(int id, [FromServices] IPlayerService service)
+    internal static Task<PlayerDto?> GetPlayerByIdHandler(int id, [FromServices] IPlayerQueryService queryService)
     {
         Console.WriteLine($"Invoke endpoint player/id, id: {id}");
-        var player = service.GetPlayerById(id);
+        var player = queryService.GetPlayerById(id);
         return player;
     }
 }

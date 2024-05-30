@@ -1,6 +1,5 @@
-using SpaceBaseball.Core.NameGeneration;
 using SpaceBaseball.Core.Ports;
-using SpaceBaseball.Core.Dto;
+using SpaceBaseball.Core.Services.Generators.NameGeneration;
 using SpaceBaseball.WebAPI.Endpoints;
 
 namespace SpaceBaseball.WebAPI;
@@ -29,8 +28,12 @@ public class WebApi
 
         var nameGenerator = app.Services.GetRequiredService<INameGenerator>();
         var trainingDataReader = new TrainingFileDataReader();
+        
         nameGenerator.BuildNamePool("firstName", trainingDataReader.ReadNamesFromFile("../data/sampleFirstNames.txt")); 
-        nameGenerator.BuildNamePool("lastName", trainingDataReader.ReadNamesFromFile("../data/sampleLastNames.txt")); 
+        nameGenerator.BuildNamePool("lastName", trainingDataReader.ReadNamesFromFile("../data/sampleLastNames.txt"));
+        nameGenerator.BuildNamePool("team", trainingDataReader.ReadNamesFromFile("../data/sampleTeams.txt"), lookbackSize: 3);
+        nameGenerator.BuildNamePool("location", trainingDataReader.ReadNamesFromFile("../data/sampleCities.txt"), lookbackSize: 3);
+        nameGenerator.BuildNamePool("ballpark", trainingDataReader.ReadNamesFromFile("../data/sampleBallparks.txt"), lookbackSize: 2);
         
         // Configure the HTTP request pipeline.
         if (app.Environment.IsDevelopment())
@@ -43,30 +46,5 @@ public class WebApi
         app.RegisterEndpoints();
 
         return app.RunAsync();
-    }
-}
-
-public class PlayerService(IPlayerRetriever playerRetriever) : IPlayerService
-{
-    private IPlayerRetriever PlayerRetriever { get; set; } = playerRetriever;
-    public async Task<PlayerDto?> GetPlayerById(long id)
-    {
-        Console.WriteLine($"Invoke PlayerService GetPlayerById {id}");
-        var player = await PlayerRetriever.GetPlayerById(id);
-        if (player == null)
-        {
-            return null;
-        } 
-        
-        PlayerDto playerDto = new()
-        {
-            Id = player.Id,
-            FirstName = player.FirstName,
-            LastName = player.LastName,
-            Fielding = player.Fielding,
-            HitChance = player.HitChance
-        };
-
-        return playerDto;
     }
 }
