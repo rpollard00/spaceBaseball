@@ -1,6 +1,6 @@
 using SpaceBaseball.Core.Ports;
 
-namespace SpaceBaseball.Core.NameGeneration;
+namespace SpaceBaseball.Core.Services.Generators.NameGeneration;
 
 public class TrainingFileDataReader : ITrainingDataReader {
     

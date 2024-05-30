@@ -1,5 +1,5 @@
 using Xunit;
-using SpaceBaseball.Core.NameGeneration;
+using SpaceBaseball.Core.Services.Generators.NameGeneration;
 
 namespace SpaceBaseball.Test.Core.Test;
 

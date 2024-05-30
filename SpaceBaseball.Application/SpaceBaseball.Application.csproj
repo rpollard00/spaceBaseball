@@ -10,4 +10,8 @@
       <ProjectReference Include="..\SpaceBaseball.Core\SpaceBaseball.Core.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Services\" />
+    </ItemGroup>
+
 </Project>

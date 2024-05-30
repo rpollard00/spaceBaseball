@@ -8,6 +8,7 @@ namespace SpaceBaseball.Adapter.Sqlite;
 public class BaseballDbContext : DbContext, IBaseballDbContext
 {
    public DbSet<Player> Players { get; set; }
+   public DbSet<Team> Teams { get; set; }
    private string? _connectionString;
 
    public BaseballDbContext()

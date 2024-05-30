@@ -1,7 +1,6 @@
 using SpaceBaseball.Core.Models;
-using SpaceBaseball.Core.Utils;
 
-namespace SpaceBaseball.Core.Adapters.StatGeneration;
+namespace SpaceBaseball.Core.Utils;
 
 public static class AbilityScoreGenerator 
 {

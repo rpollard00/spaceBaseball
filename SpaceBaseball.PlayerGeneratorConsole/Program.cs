@@ -1,6 +1,6 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
-using SpaceBaseball.Core.NameGeneration;
+using SpaceBaseball.Core.Services.Generators.NameGeneration;
 
 NameGenerator nameGen = new();
 TrainingFileDataReader trainingFileDataReader = new();

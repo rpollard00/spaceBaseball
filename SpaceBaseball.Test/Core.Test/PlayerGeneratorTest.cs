@@ -1,7 +1,7 @@
 using Xunit;
 using Moq;
+using SpaceBaseball.Core.Adapters.PlayerGenerator;
 using SpaceBaseball.Core.Ports;
-using SpaceBaseball.Core.PlayerGenerator;
 using SpaceBaseball.Core.Dto;
 
 namespace SpaceBaseball.Test.Core.Test;

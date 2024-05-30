@@ -5,7 +5,6 @@ namespace SpaceBaseball.Core.Mappers;
 
 public static class DtoMapper
 {
-    // I have not built the data model out at all yet
     public static PlayerDto ToDto(this Player player)
     {
         PlayerDto dto = new()
@@ -34,5 +33,45 @@ public static class DtoMapper
         };
 
         return player;
+    }
+
+    public static TeamDto ToDto(this Team team)
+    {
+        List<PlayerDto> rosterDto = new(); 
+        foreach (var player in team.Roster)
+        {
+            rosterDto.Add(player.ToDto());    
+        }
+
+        TeamDto teamDto = new()
+        {
+            Id = team.Id,
+            Name = team.Name,
+            Location = team.Location,
+            Ballpark = team.Ballpark,
+            Roster = rosterDto,  
+        };
+
+        return teamDto;
+    }
+
+    public static Team ToTeam(this TeamDto teamDto)
+    {
+        List<Player> roster = new(); 
+        foreach (var player in teamDto.Roster)
+        {
+            roster.Add(player.ToPlayer());    
+        }
+
+        Team team = new()
+        {
+            Id = teamDto.Id,
+            Name = teamDto.Name,
+            Location = teamDto.Location,
+            Ballpark = teamDto.Ballpark,
+            Roster = roster,  
+        };
+
+        return team;
     }
 }
