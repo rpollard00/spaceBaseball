@@ -1,6 +1,6 @@
 using System.Text;
 
-namespace SpaceBaseball.Core.NameGeneration;
+namespace SpaceBaseball.Core.Services.Generators.NameGeneration;
 
 internal class MarkovCell(string? priorLetters)
 {

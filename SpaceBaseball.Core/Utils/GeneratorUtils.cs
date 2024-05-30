@@ -1,4 +1,4 @@
-namespace SpaceBaseball.Application.Utils;
+namespace SpaceBaseball.Core.Utils;
 
 public static class GeneratorUtils
 {
