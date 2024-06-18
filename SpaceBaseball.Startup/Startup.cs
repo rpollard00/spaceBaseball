@@ -20,7 +20,8 @@ var api = new WebApi(args, options =>
     options.AddScoped<ITeamRepository, TeamRepository>();
     options.AddScoped<ITeamCommandService, TeamCommandService>();
     options.AddScoped<ITeamGenerator, TeamGenerator>();
-    options.AddScoped<IPlayerQueryService, PlayerQueryService>(); 
+    options.AddScoped<IPlayerQueryService, PlayerQueryService>();
+    options.AddSingleton<PlayerService>();
 });
 
 await api.RunAsync();

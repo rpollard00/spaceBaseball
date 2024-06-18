@@ -15,6 +15,7 @@ public static class DtoMapper
             Fielding = player.Fielding,
             HitChance = player.HitChance,
             AbilityScores = player.AbilityScores,
+            Positions = player.Positions,
         };
 
         return dto;
@@ -30,6 +31,7 @@ public static class DtoMapper
             Fielding = dto.Fielding,
             HitChance = dto.HitChance,
             AbilityScores = dto.AbilityScores,
+            Positions = dto.Positions,
         };
 
         return player;
@@ -37,10 +39,10 @@ public static class DtoMapper
 
     public static TeamDto ToDto(this Team team)
     {
-        List<PlayerDto> rosterDto = new(); 
+        List<PlayerDto> rosterDto = new();
         foreach (var player in team.Roster)
         {
-            rosterDto.Add(player.ToDto());    
+            rosterDto.Add(player.ToDto());
         }
 
         TeamDto teamDto = new()
@@ -49,7 +51,7 @@ public static class DtoMapper
             Name = team.Name,
             Location = team.Location,
             Ballpark = team.Ballpark,
-            Roster = rosterDto,  
+            Roster = rosterDto,
         };
 
         return teamDto;
@@ -57,10 +59,10 @@ public static class DtoMapper
 
     public static Team ToTeam(this TeamDto teamDto)
     {
-        List<Player> roster = new(); 
+        List<Player> roster = new();
         foreach (var player in teamDto.Roster)
         {
-            roster.Add(player.ToPlayer());    
+            roster.Add(player.ToPlayer());
         }
 
         Team team = new()
@@ -69,7 +71,7 @@ public static class DtoMapper
             Name = teamDto.Name,
             Location = teamDto.Location,
             Ballpark = teamDto.Ballpark,
-            Roster = roster,  
+            Roster = roster,
         };
 
         return team;

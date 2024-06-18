@@ -3,32 +3,36 @@ using SpaceBaseball.Core.Dto;
 using SpaceBaseball.Core.Mappers;
 using SpaceBaseball.Core.Ports;
 using SpaceBaseball.Core.Ports.DataPersistence;
+using SpaceBaseball.Core.Services;
 
 namespace SpaceBaseball.WebAPI.Handlers;
 
 public static class GeneratorHandlers
 {
-    internal static async Task<PlayerDto> PlayerGeneratorHandler([FromServices] IPlayerCommandService playerCommandService, [FromServices] INameGenerator nameGenerator, [FromServices] IPlayerGenerator playerGenerator)
+    internal static async Task<PlayerDto> PlayerGeneratorHandler([FromServices] IPlayerCommandService playerCommandService, [FromServices] INameGenerator nameGenerator, [FromServices] IPlayerGenerator playerGenerator, [FromServices] PlayerService playerService)
     {
+
         Console.WriteLine($"Invoke endpoint generator/player");
-        var player = playerGenerator.GeneratePlayer(nameGenerator);
+        var player = playerGenerator.GeneratePlayer(nameGenerator, playerService);
         await playerCommandService.AddPlayer(player);
 
+        Console.WriteLine(player.Positions);
         return player;
     }
 
     internal static async Task<TeamDto> TeamGeneratorHandler([FromServices] ITeamCommandService teamCommandService,
         [FromServices] ITeamGenerator teamGenerator, [FromServices] IPlayerGenerator playerGenerator,
-        [FromServices] INameGenerator nameGenerator)
+        [FromServices] INameGenerator nameGenerator,
+        [FromServices] PlayerService playerService)
     {
-        var teamDto  = teamGenerator.GenerateTeam(nameGenerator, playerGenerator);
+        var teamDto = teamGenerator.GenerateTeam(nameGenerator, playerGenerator, playerService);
         var team = await teamCommandService.AddTeam(teamDto);
         Console.WriteLine($"Invoke endpoint generator/team");
 
         return team?.ToDto() ?? teamDto;
 
     }
-    
+
     internal static string NameGeneratorHandler([FromServices] INameGenerator nameService)
     {
         var firstName = nameService.GetNameFromPool("firstName");
@@ -37,7 +41,7 @@ public static class GeneratorHandlers
 
         return $"{firstName} {lastName}";
     }
-    
+
     internal static string TeamNameGeneratorHandler([FromServices] INameGenerator nameService)
     {
         var location = nameService.GetNameFromPool("location");
@@ -46,7 +50,7 @@ public static class GeneratorHandlers
 
         return $"{location} {team}";
     }
-    
+
     internal static string BallparkNameGeneratorHandler([FromServices] INameGenerator nameService)
     {
         var ballpark = nameService.GetNameFromPool("ballpark");
