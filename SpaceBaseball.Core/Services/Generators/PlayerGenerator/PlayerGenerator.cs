@@ -1,4 +1,5 @@
 using SpaceBaseball.Core.Dto;
+using SpaceBaseball.Core.Models;
 using SpaceBaseball.Core.Ports;
 using SpaceBaseball.Core.Services;
 using SpaceBaseball.Core.Utils;
@@ -19,7 +20,7 @@ public class PlayerGenerator : IPlayerGenerator
             HitChance = 50,
         };
 
-        List<string> positions = playerService.GetPreferredPositionList(player);
+        List<PositionsEntry> positions = playerService.GetPreferredPositionList(player);
 
         player.Positions = positions;
 

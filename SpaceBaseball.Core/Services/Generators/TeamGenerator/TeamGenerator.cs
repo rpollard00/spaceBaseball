@@ -9,18 +9,19 @@ namespace SpaceBaseball.Core.Adapters.TeamGenerator;
 public class TeamGenerator : ITeamGenerator
 {
     private readonly int _rosterSize = 26;
-    public TeamDto GenerateTeam(INameGenerator nameGenerator, IPlayerGenerator playerGenerator, PlayerService playerService)
+    public TeamDto GenerateTeam(INameGenerator nameGenerator, IPlayerGenerator playerGenerator, PlayerService playerService, TeamService teamService)
     {
         // generate roster  ??
-        List<PlayerDto> roster = new();
+        List<PlayerDto> playerList = new();
 
         // 26 man easy for now
         for (int i = 0; i < _rosterSize; i++)
         {
             var currentPlayer = playerGenerator.GeneratePlayer(nameGenerator, playerService);
-            roster.Add(currentPlayer);
+            playerList.Add(currentPlayer);
         }
 
+        var roster = teamService.SetRoster(playerList);
 
         TeamDto team = new()
         {

@@ -68,7 +68,7 @@ public class PlayerService
     {
         {"C", new PlayerClass("CHA", "CON", "INT")},
         {"1B", new PlayerClass("STR", "DEX", "CON")},
-        {"2B", new PlayerClass("DEX", "INT", "WIS")},
+        {"2B", new PlayerClass("DEX", "INT", "STR")},
         {"3B", new PlayerClass("DEX", "STR", "CON")},
         {"SS", new PlayerClass("DEX", "INT", "WIS")},
         {"LF", new PlayerClass("DEX", "STR", "CHA")},
@@ -76,8 +76,7 @@ public class PlayerService
         {"RF", new PlayerClass("STR", "DEX", "CHA")},
         {"DH", new PlayerClass("STR", "CHA", "WIS")},
         {"SP", new PlayerClass("CON", "INT", "DEX")},
-        {"MR", new PlayerClass("DEX", "CON", "WIS")},
-        {"HL", new PlayerClass("DEX", "WIS", "CHA")},
+        {"RL", new PlayerClass("DEX", "CON", "WIS")},
     };
 
     public int GetPositionScore(PlayerDto player, string inputPosition)
@@ -90,7 +89,7 @@ public class PlayerService
 
         var primaryScore = position!.PrimaryWeight * AbilityScoreService.GetAbilityScoreByShortStr(position!.PrimaryAbility, player.AbilityScores);
         var secondaryScore = position!.SecondaryWeight * AbilityScoreService.GetAbilityScoreByShortStr(position!.SecondaryAbility, player.AbilityScores);
-        var tertiaryScore = position!.TertiaryWeight = AbilityScoreService.GetAbilityScoreByShortStr(position!.SecondaryAbility, player.AbilityScores);
+        var tertiaryScore = position!.TertiaryWeight = AbilityScoreService.GetAbilityScoreByShortStr(position!.TertiaryAbility, player.AbilityScores);
 
         return primaryScore + secondaryScore + tertiaryScore;
     }
@@ -108,14 +107,18 @@ public class PlayerService
         return positionScores;
     }
 
-    public List<string> GetPreferredPositionList(PlayerDto player)
+    public List<PositionsEntry> GetPreferredPositionList(PlayerDto player)
     {
         PriorityQueue<string, int> positionScores = GetPositionScores(player);
-        List<string> positions = new();
+        List<PositionsEntry> positions = new();
         while (positionScores.Count > 0)
         {
-            positionScores.TryDequeue(out string? pos, out int priority);
-            positions.Add(pos!);
+            positionScores.TryDequeue(out string? pos, out int rating);
+            positions.Add(new PositionsEntry()
+            {
+                Position = pos!,
+                Rating = -rating,
+            });
         }
 
         return positions;

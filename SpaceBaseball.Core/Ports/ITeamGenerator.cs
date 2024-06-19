@@ -5,5 +5,5 @@ namespace SpaceBaseball.Core.Ports;
 
 public interface ITeamGenerator
 {
-    public TeamDto GenerateTeam(INameGenerator nameGenerator, IPlayerGenerator playerGenerator, PlayerService playerService);
+    public TeamDto GenerateTeam(INameGenerator nameGenerator, IPlayerGenerator playerGenerator, PlayerService playerService, TeamService teamService);
 }
