@@ -40,10 +40,6 @@ public static class DtoMapper
     public static TeamDto ToDto(this Team team)
     {
         List<PlayerDto> rosterDto = new();
-        foreach (var player in team.Roster)
-        {
-            rosterDto.Add(player.ToDto());
-        }
 
         TeamDto teamDto = new()
         {
@@ -51,7 +47,7 @@ public static class DtoMapper
             Name = team.Name,
             Location = team.Location,
             Ballpark = team.Ballpark,
-            Roster = rosterDto,
+            Roster = team.Roster,
         };
 
         return teamDto;
@@ -60,10 +56,6 @@ public static class DtoMapper
     public static Team ToTeam(this TeamDto teamDto)
     {
         List<Player> roster = new();
-        foreach (var player in teamDto.Roster)
-        {
-            roster.Add(player.ToPlayer());
-        }
 
         Team team = new()
         {
@@ -71,7 +63,7 @@ public static class DtoMapper
             Name = teamDto.Name,
             Location = teamDto.Location,
             Ballpark = teamDto.Ballpark,
-            Roster = roster,
+            Roster = teamDto.Roster,
         };
 
         return team;

@@ -6,6 +6,6 @@ public class Team
     public string Name { get; set; } = "";
     public string Location { get; set; } = "";
     public string Ballpark { get; set; } = "";
-    public List<Player> Roster { get; set; } = new();
-    
+    public Roster Roster { get; set; } = new();
 }
+    
