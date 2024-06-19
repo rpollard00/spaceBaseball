@@ -3,6 +3,7 @@ using Moq;
 using SpaceBaseball.Core.Adapters.PlayerGenerator;
 using SpaceBaseball.Core.Ports;
 using SpaceBaseball.Core.Dto;
+using SpaceBaseball.Core.Services;
 
 namespace SpaceBaseball.Test.Core.Test;
 
@@ -16,8 +17,9 @@ public class PlayerGeneratorTest
         mockNameGenerator.Setup(ng => ng.GetNameFromPool("lastName")).Returns("Rodriguez");
 
         var playerGenerator = new PlayerGenerator();
+        var playerService = new PlayerService();
 
-        PlayerDto player = playerGenerator.GeneratePlayer(mockNameGenerator.Object);
+        PlayerDto player = playerGenerator.GeneratePlayer(mockNameGenerator.Object, playerService);
         
         Assert.Equal("Julio", player.FirstName);
         Assert.Equal("Rodriguez", player.LastName);

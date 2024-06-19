@@ -8,7 +8,7 @@ using SpaceBaseball.Core.Adapters.PlayerGenerator;
 using SpaceBaseball.Core.Adapters.TeamGenerator;
 using SpaceBaseball.Core.Ports;
 using SpaceBaseball.Core.Ports.DataPersistence;
-using SpaceBaseball.Core.Services;
+using SpaceBaseball.Core.Services; 
 using SpaceBaseball.Core.Services.DataPersistence;
 
 var api = new WebApi(args, options =>
@@ -22,6 +22,7 @@ var api = new WebApi(args, options =>
     options.AddScoped<ITeamGenerator, TeamGenerator>();
     options.AddScoped<IPlayerQueryService, PlayerQueryService>();
     options.AddSingleton<PlayerService>();
+    options.AddSingleton<TeamService>();
 });
 
 await api.RunAsync();

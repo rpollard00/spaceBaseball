@@ -16,16 +16,16 @@ public static class GeneratorHandlers
         var player = playerGenerator.GeneratePlayer(nameGenerator, playerService);
         await playerCommandService.AddPlayer(player);
 
-        Console.WriteLine(player.Positions);
         return player;
     }
 
     internal static async Task<TeamDto> TeamGeneratorHandler([FromServices] ITeamCommandService teamCommandService,
         [FromServices] ITeamGenerator teamGenerator, [FromServices] IPlayerGenerator playerGenerator,
         [FromServices] INameGenerator nameGenerator,
-        [FromServices] PlayerService playerService)
+        [FromServices] PlayerService playerService,
+        [FromServices] TeamService teamService)
     {
-        var teamDto = teamGenerator.GenerateTeam(nameGenerator, playerGenerator, playerService);
+        var teamDto = teamGenerator.GenerateTeam(nameGenerator, playerGenerator, playerService, teamService);
         var team = await teamCommandService.AddTeam(teamDto);
         Console.WriteLine($"Invoke endpoint generator/team");
 
