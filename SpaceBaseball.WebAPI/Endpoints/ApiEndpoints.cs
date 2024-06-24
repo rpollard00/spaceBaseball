@@ -26,12 +26,18 @@ public static class ApiEndpoints
             .WithName("GenerateRandomBallparkName")
             .WithOpenApi();
         
+        // TODO make into POST
         app.MapGet("/generator/player", GeneratorHandlers.PlayerGeneratorHandler)
             .WithName("GenerateRandomPlayer")
             .WithOpenApi();
         
+        // TODO make into POSt
         app.MapGet("/generator/team", GeneratorHandlers.TeamGeneratorHandler)
             .WithName("GenerateRandomTeam")
+            .WithOpenApi();
+
+        app.MapGet("sim/atbat", SimHandlers.SimAtBat)
+            .WithName("SimulateAtBat")
             .WithOpenApi();
     }
 }

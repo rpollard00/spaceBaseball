@@ -8,8 +8,10 @@ using SpaceBaseball.Core.Adapters.PlayerGenerator;
 using SpaceBaseball.Core.Adapters.TeamGenerator;
 using SpaceBaseball.Core.Ports;
 using SpaceBaseball.Core.Ports.DataPersistence;
+using SpaceBaseball.Core.Ports.Services;
 using SpaceBaseball.Core.Services; 
 using SpaceBaseball.Core.Services.DataPersistence;
+using SpaceBaseball.Core.Services.Simulation;
 
 var api = new WebApi(args, options =>
 {
@@ -21,6 +23,7 @@ var api = new WebApi(args, options =>
     options.AddScoped<ITeamCommandService, TeamCommandService>();
     options.AddScoped<ITeamGenerator, TeamGenerator>();
     options.AddScoped<IPlayerQueryService, PlayerQueryService>();
+    options.AddScoped<IAtBatSimService, AtBatSimService>();
     options.AddSingleton<PlayerService>();
     options.AddSingleton<TeamService>();
 });

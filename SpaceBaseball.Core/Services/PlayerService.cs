@@ -33,6 +33,8 @@ public class PlayerService
         return 0;
     }
 
+    public string Name(PlayerDto player) => $"{player.FirstName} {player.LastName}";
+
     // Strength = GeneratorUtils.DiceRoller(4, 6, 1),
     // Dexterity = GeneratorUtils.DiceRoller(4, 6, 1),
     // Constitution = GeneratorUtils.DiceRoller(4, 6, 1),
