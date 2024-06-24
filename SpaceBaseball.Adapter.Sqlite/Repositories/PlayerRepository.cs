@@ -14,7 +14,7 @@ public class PlayerRepository(IBaseballDbContext dbContext) : IPlayerRepository
     public async Task<Player?> GetById(long id)
     {
         Console.WriteLine($"Invoke Sqlite Adapter GetPlayerById {id}");
-        Player? player = await dbContext.Players.Include(p => p.AbilityScores).Where(p => p.Id == id).FirstOrDefaultAsync();
+        Player? player = await dbContext.Players.Include(p => p.AbilityScores).Include(p => p.Positions).Where(p => p.Id == id).FirstOrDefaultAsync();
         return player;
     }
 

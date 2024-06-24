@@ -7,7 +7,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Ports\Services\" />
       <Folder Include="Services\Generators\StatGeneration\" />
     </ItemGroup>
 
